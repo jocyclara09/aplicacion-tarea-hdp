@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def lista_encuesta(request):
+    return render(request, 'aplicacion/lista_encuesta.html', {})
