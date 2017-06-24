@@ -1,18 +1,14 @@
-    <html>
-        <head>
-            <title>Home</title>
-        </head>
-        <body>
-            <div>
-                <h1><a href="">Bienvenido!</a></h1>
-            </div>
+{% extends 'aplicacion/base.html' %}
 
-            {% for encuesta in encuestas %}
-            <div>
-            <p>creado: {{ encuesta.fecha_creacion }}</p>
-            <h1><a href="">{{ encuesta.nombre }}</a></h1>
-            <p>universo: {{ encuesta.universo|linebreaksbr }}</p>
-            </div>
-            {% endfor %}
-        </body>
-    </html>
+{% block content %}
+                {% for encuesta in encuestas %}
+            <div class="encuesta">
+                        <div class="date">
+                            {{ encuesta.fecha_creacion }}
+                        </div>
+                        <h1><a href="{% url 'aplicacion.views.detalle_encuesta' pk=encuesta.pk %}">{{ encuesta.nombre }}</a></h1>
+                        <p>universo: {{ encuesta.universo|linebreaksbr }}</p>
+                </div>
+                {% endfor %}
+                {% endblock content %}
+            
