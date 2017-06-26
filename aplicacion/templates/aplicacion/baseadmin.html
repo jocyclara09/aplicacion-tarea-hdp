@@ -22,16 +22,13 @@
 
             <div class="collapse navbar-collapse" id="barranavegacion">
                 <ul class="nav navbar-nav">
-                <li><a href="{% url 'aplicacion.views.inicio' %}">Inicio</a></li>
-                
+                <li><a href="{% url 'aplicacion.views.lista_encuesta' %}">Inicio</a></li>
+                <li><a href="{% url 'aplicacion.views.nueva_encuesta' %}">Nueva Encuesta</a></li>
                 <li><a href="#}">Informacion</a></li>
                 </ul>
 
-                <form action="" class="navbar-form navbar-rigth">
-                    <div>
-                        <a target="" href="{% url 'aplicacion.views.login' %}" class="btn btn-primary">Iniciar Sesion</a>
-                    </div>
-                </form>
+                <p>Estas logueado como {{ user.username|capfirst }}, <a href="{% url 'aplicacion.views.logout' %}">Cerrar Sesion</a></p>
+
                 </div>
                 </div>
                 </nav>

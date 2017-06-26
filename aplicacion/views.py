@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
-from django.contrib.auth import logout as logout_django
+from django.contrib.auth import logout as logut_django
 from django.contrib.auth.decorators import login_required
 from django.db import connection
 from django.contrib.auth.models import User
@@ -22,7 +22,7 @@ def login(request):
 		user = authenticate( username = username_post, password = password_post)
 		if user is not None:
 			login_django(request, user)
-			return redirect('http://127.0.0.1:8000/')
+			return redirect('/login/home/')
 			#return render(request, 'aplicacion/lista_encuesta.html', {})
 		else:
 			message = "El Username o Password es incorrecto"
@@ -32,6 +32,18 @@ def login(request):
 		'message' : message,
 	}
 	return render(request, 'aplicacion/login.html', context)
+
+def logout(request):
+	logut_django(request)
+	return redirect('http://127.0.0.1:8000/')
+
+def inicio(request):
+	encuestas = Encuesta.objects.filter(fecha_creacion__lte=timezone.now()).order_by('fecha_creacion')
+	return render(request, 'aplicacion/inicio.html', {'encuestas': encuestas})
+
+def detalle(request, pk):
+    encuesta = get_object_or_404(Encuesta, pk=pk)
+    return render(request, 'aplicacion/detalle.html', {'encuesta': encuesta})
 
 def lista_encuesta(request):
 	encuestas = Encuesta.objects.filter(fecha_creacion__lte=timezone.now()).order_by('fecha_creacion')
