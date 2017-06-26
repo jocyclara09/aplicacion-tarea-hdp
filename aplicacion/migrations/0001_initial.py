@@ -22,4 +22,20 @@ class Migration(migrations.Migration):
                 ('autor', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
+        migrations.CreateModel(
+            name='Pregunta',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('pregunta', models.CharField(max_length=200)),
+                ('idE', models.ForeignKey(to='aplicacion.Encuesta')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Respuesta',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('respuesta', models.CharField(max_length=200)),
+                ('idP', models.ForeignKey(to='aplicacion.Pregunta')),
+            ],
+        ),
     ]

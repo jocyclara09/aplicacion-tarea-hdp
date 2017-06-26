@@ -1,0 +1,11 @@
+{% extends 'aplicacion/baseadmin.html' %}
+
+    {% block content %}
+        <h1>Crear Preguntas y Respuestas</h1>
+        <form method="POST">
+        {% csrf_token %}
+        	{{ form2.as_p }}
+        	{{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+    {% endblock %}

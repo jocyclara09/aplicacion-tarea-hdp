@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic import CreateView
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.contrib.auth import authenticate
@@ -10,9 +11,9 @@ from django.contrib.auth import logout as logut_django
 from django.contrib.auth.decorators import login_required
 from django.db import connection
 from django.contrib.auth.models import User
-from .models import Encuesta
+from .models import Encuesta, Pregunta
 from .forms import LoginForm
-from .forms import EncuestaForm
+from .forms import EncuestaForm, PreguntaForm, RespuestaForm
 
 def login(request):
 	message  = None
@@ -61,8 +62,35 @@ def nueva_encuesta(request):
             encuesta.autor = request.user
             encuesta.fecha_creacion = timezone.now()
             encuesta.save()
-            #return redirect('detalle_encuesta', pk=encuesta.pk)
-            return render(request, 'aplicacion/detalle_encuesta.html', {'encuesta': encuesta})
+            return redirect('http://127.0.0.1:8000/login/encuesta/pregunta/')
+            #return render(request, 'aplicacion/detalle_encuesta.html', {'encuesta': encuesta})
     else:
         form = EncuestaForm()
     return render(request, 'aplicacion/edicion_encuesta.html', {'form': form})
+
+class Preg(CreateView):
+	model = Pregunta
+	template_name = 'aplicacion/pregunta.html'
+	form_class = RespuestaForm
+	second_form_class = PreguntaForm
+	success_url = reverse_lazy('/login/home/')
+
+	def get_context_data(self, **kwargs):
+		context = super(Preg, self).get_context_data(**kwargs)
+		if 'form' not in context:
+			context['form'] = self.form_class(self.request.GET)
+		if 'form2' not in context:
+			context['form2'] =self.second_form_class(self.request.GET)
+		return context
+
+	def post(self, request, *args, **kwargs):
+		self.objects = self.get_object
+		form = self.form_class(request.POST)
+		form2 = self.second_form_class(request.POST)
+		if form.is_valid() and form2.is_valid():
+			respuesta = form.save(commit=False)
+			respuesta.idP = form2.save()
+			respuesta.save()
+			return redirect('/login/home/')
+		else:
+			return self.render_to_response(self.get_context_data(form=form, form2=form2))
