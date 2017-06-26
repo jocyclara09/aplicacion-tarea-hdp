@@ -7,6 +7,14 @@ body {
         padding-left: 15px;
     }
 
+/*------------------------*/
+
+    .navbar{
+        margin-bottom: 0px;
+    }
+
+    /*-------------------------*/
+
 .page-header {
         background-color: #13A0CF;
         margin-top: 0;
@@ -16,6 +24,12 @@ body {
     .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
         color: #ffffff;
         font-size: 36pt;
+        text-decoration: none;
+    }
+
+    .page-header h2, .page-header h2 a, .page-header h2 a:visited, .page-header h2 a:active {
+        color: #ffffff;
+        font-size: 18pt;
         text-decoration: none;
     }
 
