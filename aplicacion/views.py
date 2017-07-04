@@ -36,7 +36,7 @@ def login(request):
 
 def logout(request):
 	logut_django(request)
-	return redirect('http://127.0.0.1:8000/')
+	return redirect('/home/')
 
 def inicio(request):
 	encuestas = Encuesta.objects.filter(fecha_creacion__lte=timezone.now()).order_by('fecha_creacion')
@@ -62,7 +62,7 @@ def nueva_encuesta(request):
             encuesta.autor = request.user
             encuesta.fecha_creacion = timezone.now()
             encuesta.save()
-            return redirect('http://127.0.0.1:8000/login/encuesta/pregunta/')
+            return redirect('/login/encuesta/pregunta/')
             #return render(request, 'aplicacion/detalle_encuesta.html', {'encuesta': encuesta})
     else:
         form = EncuestaForm()

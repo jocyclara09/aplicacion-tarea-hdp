@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
 
-	url(r'^$', views.inicio),
+	url(r'^home/$', views.inicio),
 	url(r'^encuesta/(?P<pk>[0-9]+)/$', views.detalle),
 	url(r'^login/$', views.login),
 	url(r'^logout/$', views.logout),
